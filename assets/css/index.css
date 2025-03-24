@@ -1,0 +1,5 @@
+#bluesky {
+  padding: 0 2rem;
+  color: rgba(var(--bs-info-rgb));
+  font: 1.5rem sans-serif;
+}
