@@ -14,6 +14,7 @@ body {
   font-size: 80px;
   line-height: 100px;
   background: -webkit-linear-gradient(#03b6df, #c4eaf3);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
