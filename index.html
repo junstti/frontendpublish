@@ -146,8 +146,8 @@
           }
       }
     </script> -->
-    <script>
-//       async function login() {
+    <!-- <script> -->
+<!-- //       async function login() {
 //     const username = document.querySelector("[name='username']").value;
 //     const password = document.querySelector("[name='password']").value;
 
@@ -181,13 +181,70 @@
 //         alert("Có lỗi xảy ra, vui lòng thử lại!");
 //     }
 // }
-const API_BASE_URL = "https://bluesky-backend-bii5.onrender.com"; // Đảm bảo URL này đúng
+//
+
+// const API_URL = "https://www.protocolmaster.xyz"; // Kiểm tra URL này
+
+// async function login() {
+//     const response = await fetch(`${API_URL}/login`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ username: "admin", password: "123456" })
+//     });
+
+//     const data = await response.json();
+//     console.log("Phản hồi từ server:", data);
+// }
+
+
+
+
+
+
+
+
+
+// const API_BASE_URL = "https://bluesky-backend-bii5.onrender.com"; // Đảm bảo URL này đúng
+// async function login() {
+//     const username = document.querySelector("[name='username']").value;
+//     const password = document.querySelector("[name='password']").value;
+
+//     try {
+//         const response = await fetch("/login", {
+//             method: "POST",
+//             headers: { "Content-Type": "application/json" },
+//             body: JSON.stringify({ username, password })
+//         });
+
+//         if (!response.ok) {
+//             throw new Error(`Lỗi server: ${response.status}`);
+//         }
+
+//         const result = await response.json();
+
+//         if (result.success) {
+//             localStorage.setItem("isLoggedIn", "true");
+//             window.location.href = "/dash.html";
+//         } else {
+//             alert("❌ " + result.message);
+//         }
+//     } catch (error) {
+//         alert("⚠ Lỗi kết nối, vui lòng kiểm tra mạng và thử lại!");
+//     }
+// }
+
+
+//     </script> -->
+    
+<script>
+  const API_URL = "https://www.protocolmaster.xyz"; // Kiểm tra lại URL chính xác
+
 async function login() {
     const username = document.querySelector("[name='username']").value;
     const password = document.querySelector("[name='password']").value;
 
     try {
-        const response = await fetch("/login", {
+        const response = await fetch(`${API_URL}/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, password })
@@ -201,7 +258,7 @@ async function login() {
 
         if (result.success) {
             localStorage.setItem("isLoggedIn", "true");
-            window.location.href = "/dash.html";
+            window.location.href = "/dash.html"; // Chuyển hướng khi đăng nhập thành công
         } else {
             alert("❌ " + result.message);
         }
@@ -210,9 +267,7 @@ async function login() {
     }
 }
 
-
-    </script>
-    
+</script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   </body>
 </html>
