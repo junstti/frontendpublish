@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>BLUESKY</title>
+    <link
+      rel="shortcut icon"
+      href="/icon/favicon_io/favicon-16x16.png"
+      type="image/x-icon"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script>
+      const app_vals = {
+        api_url: "https://bluesky-backend-bii5.onrender.com",
+      };
+    </script>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap4.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.9/dist/sweetalert2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/select2-bootstrap4-theme@1.0.0/dist/select2-bootstrap4.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.1/axios.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.8/js/dataTables.bootstrap4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.9/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js"></script>
+    <style>
+      .progress {
+        position: relative;
+      }
+
+      .progress span {
+        position: absolute;
+        display: block;
+        width: 100%;
+        color: black;
+      }
+    </style>
+    <!-- <link rel="stylesheet" href="/front-end/assets/css/index.css" /> -->
+    <link rel="stylesheet" href="/publish/assets/css/index.css" />
+  </head>
+  <body>
+    <nav class="navbar navbar-icon-top navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" id="bluesky" href="">BLUESKY</a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="./?v=scan-videos">
+              <i class="fa fa-search" aria-hidden="true"></i> SCAN VIDEOS
+            </a>
+          </li> -->
+        </ul>
+        <ul class="navbar-nav"></ul>
+      </div>
+    </nav>
+    <div class="container-fluid mt-5">
+      <style>
+        .highlighted {
+          border: 3px solid #2f9b3c;
+        }
+        .scroll-img {
+          overflow-x: auto;
+        }
+      </style>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card border-info">
+            <h6 class="card-header bg-info" style="color: white">
+              <i class="fa fa-qrcode" aria-hidden="true"></i> SKY POSTS
+            </h6>
+            <div class="card-body">
+              <form id="form">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <select
+                        class="form-control"
+                        id="listPages"
+                        onchange="setCookieFanpage()"
+                      ></select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <select class="form-control" id="listAdsAcc"></select>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="input-group mb-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="num_video"
+                        placeholder="Số lượng video"
+                        value="10"
+                      />
+                      <div class="input-group-append">
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                          onclick="getVideos(this)"
+                        >
+                          Hiện Video
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12 mb-3">
+                    <button
+                      class="btn btn-success"
+                      type="button"
+                      onclick="autoPostModal()"
+                      id="btn-auto-post"
+                    >
+                      Auto Đăng Bài
+                    </button>
+                    <button
+                      class="btn btn-warning"
+                      type="button"
+                      onclick="offAutoCreateReels()"
+                      id="btn-off-create-reels"
+                    >
+                      Fix Reels
+                    </button>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="table-responsive">
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <th style="width: 5%">
+                              #. <input type="checkbox" id="toggle_all" />
+                            </th>
+                            <th style="width: 50%">Videos</th>
+                            <th style="width: 10%">Created time</th>
+                            <th style="width: 35%">Logs</th>
+                          </tr>
+                        </thead>
+                        <tbody id="listAdsVideo"></tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="auto-post-modal">
+        <div class="modal-dialog modal-xl" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title">Auto Đăng Bài</h6>
+            </div>
+            <div class="modal-body">
+              <form id="auto-post-form">
+                <div class="form-group">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="delay_post"
+                    placeholder="Delay mỗi bài (phút)"
+                    value="60"
+                  />
+                </div>
+                <div class="form-group">
+                  <textarea
+                    type="text"
+                    class="form-control"
+                    rows="4"
+                    name="canvas_url"
+                    placeholder="Link canvas"
+                  ></textarea>
+                </div>
+                <div class="form-group">
+                  <select class="form-control" id="remove_video">
+                    <option value="1">Xóa video sau khi đăng</option>
+                    <option value="0">Không xóa video sau khi đăng</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <input
+                    type="number"
+                    class="form-control"
+                    name="delay_start"
+                    placeholder="Bắt đầu chạy sau (phút)"
+                    value="1"
+                  />
+                </div>
+                <div class="form-group">
+                  <select class="form-control" id="type_image">
+                    <option value="1">Đăng 1 ảnh</option>
+                    <option value="2">Đăng 2 ảnh</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-primary"
+                onclick="autoPost(this)"
+              >
+                Thực hiện
+              </button>
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Đóng
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <script>
+        function logout() {
+          localStorage.removeItem("isLoggedIn");
+          fetch("/logout", { method: "POST" }).then(() => {
+            window.location.href = "/login.html";
+          });
+        }
+      </script>
+
+      <script>
+        var _canvas_url;
+        $(document).ready(async function () {
+          console.log("jq ready");
+
+          localStorage.clear();
+          $("#listAdsVideo").on(
+            "click",
+            "[name=videos_selected]",
+            function (e) {
+              if (e.shiftKey && lastClickedCheckbox !== null) {
+                var checkboxes = $("[name=videos_selected]:not([disabled])");
+                var currentIndex = checkboxes.index(this);
+                var lastIndex = checkboxes.index(lastClickedCheckbox);
+
+                var start = Math.min(currentIndex, lastIndex);
+                var end = Math.max(currentIndex, lastIndex);
+
+                checkboxes
+                  .slice(start, end + 1)
+                  .prop("checked", lastClickedCheckbox.checked);
+              }
+              lastClickedCheckbox = this;
+            }
+          );
+          $(".table").on("click", "#toggle_all", function (e) {
+            var checkboxes = $("[name=videos_selected]:not([disabled])");
+            let allChecked = true;
+            Array.from(checkboxes).forEach((checkbox) => {
+              if (!checkbox.checked) {
+                allChecked = false;
+              }
+            });
+            Array.from(checkboxes).forEach((checkbox) => {
+              checkbox.checked = !allChecked;
+            });
+          });
+          await delay(200);
+          let checkCookies = getFbCookies();
+          if (!checkCookies) {
+            let event = new CustomEvent("start_get_fb_cookies", { detail: "" });
+            window.dispatchEvent(event);
+          }
+          window.addEventListener("save_fb_cookies", function (e) {
+            let cookies = e.detail;
+            setFbCookies(cookies);
+          });
+          while (!getFbCookies()) {
+            console.log("Đang lấy cookie facebook");
+            await delay(2000);
+          }
+
+          let checkFbToken = getFbToken();
+          if (!checkFbToken) {
+            let event = new CustomEvent("start_get_fb_token", { detail: "" });
+            window.dispatchEvent(event);
+          }
+          window.addEventListener("UIrender_token", function (e) {
+            let token = e.detail;
+            setFbToken(token);
+          });
+          while (!getFbToken()) {
+            console.log("Đang lấy token facebook");
+            await delay(100);
+          }
+          console.log("Đã lấy token facebook");
+
+          startGetListAdsAccount();
+          window.addEventListener("UIrender_listAdsAccs", function (e) {
+            let listAdsAcc = e.detail.data;
+            settListAdsAccount(listAdsAcc);
+            let htmlListAds = "";
+            for (let i = 0; i < listAdsAcc.length; i++) {
+              let adsAcc = listAdsAcc[i];
+              let live = adsAcc.account_status == 1 ? " live" : "";
+              let active = "";
+              if (adsAcc.account_status == 1) {
+                htmlListAds += `<option value="${adsAcc.id}" data-status="${adsAcc.account_status}">${adsAcc.account_id}</option>`;
+              }
+            }
+            $("#listAdsAcc").html(htmlListAds);
+            startGetAdsToken();
+          });
+          window.addEventListener("save_ads_token_local_storage", function (e) {
+            let ads_token = e.detail;
+            setAdsToken(ads_token);
+            let event = new CustomEvent("getListPageWithToken", {
+              detail: { ads_token },
+            });
+            window.dispatchEvent(event);
+          });
+          window.addEventListener("UIrender_listPages", async function (e) {
+            let listPages = e.detail.data;
+            console.log({ listPages });
+            let listHtml = "";
+            let isShowActivePage = false;
+            for (let i = 0; i < listPages.length; i++) {
+              let page = listPages[i];
+              let id = page.id;
+              let name = page.name;
+              //let picture = page.picture.data.url;
+              let active = "";
+              if (!isShowActivePage && page.is_published) {
+                isShowActivePage = true;
+                active = " active";
+              }
+              let isBlocked = page.is_published ? "" : "disabled";
+              listHtml += `<option value="${id}" data-token="${page.access_token}" data-name="${name}" ${isBlocked} data-add-profile-id="${page.additional_profile_id}">${name}</option>`;
+            }
+            $("#listPages").html(listHtml);
+            await delay(1000);
+            await setCookieFanpage();
+          });
+          window.addEventListener(
+            "UIrender_off_auto_create_reels",
+            function (e) {
+              let status = e.detail.status;
+              if (status == "OK") {
+                Swal.fire({
+                  title: "Message?",
+                  text: "Fix thành công, Vui lòng tải lại trang!",
+                  icon: "success",
+                  confirmButtonColor: "#3085d6",
+                  confirmButtonText: "Đồng ý!",
+                }).then((result) => {
+                  if (result.isConfirmed) {
+                    location.reload();
+                  }
+                });
+              } else if (status == "NOT_ALLOWED") {
+                Swal.fire({
+                  title: "Message?",
+                  text: "Bạn không có quyền sử dụng tính năng này!",
+                  icon: "error",
+                  confirmButtonColor: "#3085d6",
+                  confirmButtonText: "Đồng ý!",
+                });
+              }
+            }
+          );
+          $(document).on("click", ".img-thumbnail", function (e) {
+            var gallery = $(this).closest("tr");
+            var isActive =
+              $(this).hasClass("active") && $(this).hasClass("highlighted");
+
+            if (isActive) {
+              $(this).removeClass("active highlighted");
+            } else {
+              // gallery.find('img').removeClass('active highlighted');
+              $(this).addClass("active highlighted");
+            }
+          });
+        });
+        var lastClickedCheckbox = null;
+        // const time_resfresh = 1800;
+        // function checkTTLandRefresh() {
+        //     console.log('check token');
+        //     let expire = localStorage.getItem('expires_at');
+        //     if (!expire) {
+        //         var oldDateObj = new Date();
+        //         var newDateObj = new Date();
+        //         newDateObj.setTime(oldDateObj.getTime() + time_resfresh * 1000);
+        //         let time = newDateObj.toUTCString();
+        //         localStorage.setItem('expires_at', time);
+        //         return;
+        //     }
+        //     let date = new Date(expire);
+        //     let now = new Date();
+        //     if (now > date) {
+        //         // if (date > now) {
+        //         console.log('Reload');
+        //         localStorage.clear();
+        //         location.reload();
+        //     }
+        // }
+        // setInterval(() => {
+        //     checkTTLandRefresh();
+        // }, 5000);
+        const getVideos = (el) => {
+          $(el).prop("disabled", true);
+          let ads_token = getAdsToken();
+          let acc_id = getCurrentAcc_id_only_number();
+          let page_id = getCurrentPage_id();
+          let number_video = $("#num_video").val();
+          let event = new CustomEvent("get_list_video_page_with_thumb", {
+            detail: {
+              ads_token,
+              page_id,
+              acc_id,
+              number_video,
+            },
+          });
+          window.dispatchEvent(event);
+          window.addEventListener(
+            "UIRender_list_video_page",
+            async function (e) {
+              let ids = e.detail.ids;
+              let videos = e.detail.data;
+              let autoCreateReels = e.detail.autoCreateReels;
+              if (autoCreateReels.status == "ON") {
+                $("#btn-off-create-reels")
+                  .removeClass("d-none")
+                  .data("cquick-token", autoCreateReels.cquick_token)
+                  .data("fb_dtsg", autoCreateReels.fb_dtsg);
+              } else {
+                $("#btn-off-create-reels").addClass("d-none");
+              }
+              let htmlMedia = "";
+              for (let i = 0; i < ids.length; i++) {
+                let id = ids[i];
+                let video = videos[id.id];
+                let thumbs = "";
+                if (video?.thumbnails?.data) {
+                  thumbs = video.thumbnails.data.map((item, e) => {
+                    if (e == 0)
+                      return `<img src="${item.uri}" class="active highlighted img-thumbnail" width="80" class="mr-2">`;
+                    else
+                      return `<img src="${item.uri}" class="img-thumbnail" width="80" class="mr-2">`;
+                  });
+                }
+                //let thumb = video.thumbnails.data[0] || '';
+                //let thumbUrl = thumb.uri;
+                let thumbUrl = id.image;
+                //let width = thumb.width;
+                //let height = thumb.height;
+                let mediaBase64 = encodeObjectToBase64(video);
+                let title = video.title
+                  ? video.title
+                  : video.description
+                  ? video.description
+                  : "";
+                let titleText = `<div class="mt-3 title" style="font-size: small;"><input class="form-control form-control-sm titleText" value="${title}" /></div>`;
+                htmlMedia += `
+            	<tr data-video="${mediaBase64}">
+					<td>${i + 1}. <input type="checkbox" name="videos_selected" data-video-id="${
+                  video.id
+                }" ${id.boosts ? "disabled" : ""}></td>
+					<td>
+						<div class="d-flex align-items-center scroll-img">
+							${thumbs}
+          				</div>
+          				
+                        <div>
+                            <span>${titleText}</span>
+                        </div>
+          			</td>
+          			<td>${formatDateTime(id.created_at * 1000)} ${
+                  id.boosts
+                    ? ' | <span class="badge badge-danger">Canvas</span>'
+                    : ""
+                }${
+                  autoCreateReels.status == "ON"
+                    ? ' | <span class="badge badge-warning">API Fix Reel</span>'
+                    : ""
+                }</td>
+          			<td><ul class="logs"></ul></td>
+				</tr>`;
+              }
+              $("#listAdsVideo").html(htmlMedia);
+              await delay(50);
+              $(el).prop("disabled", false);
+            }
+          );
+        };
+        const autoPost = () => {
+          let delay_post = parseInt($("[name=delay_post]").val());
+          let delay_start = parseInt($("[name=delay_start]").val());
+          let worker = new Worker("assets/js/worker2.js?v=123");
+          worker.postMessage({ start: true, time: delay_start });
+          $("#auto-post-modal").modal("hide");
+          worker.onmessage = function (event) {
+            if (event.data === "countdownFinished") {
+              $("#btn-auto-post").prop("disabled", false).html("Auto Đăng Bài");
+              $("input[name=videos_selected]:checked").map((e, item) => {
+                $video = $(item).closest("tr");
+                if ($video.data("video")) {
+                  let data = decodeBase64ToObject($video.data("video"));
+                  startCountdown(e * delay_post * 60, $video, data);
+                }
+              });
+            } else {
+              $("#btn-auto-post").prop("disabled", true).html(event.data);
+            }
+          };
+        };
+        const startCountdown = (durationInSeconds, el, data) => {
+          const worker = new Worker("assets/js/worker.js?t=v1.0");
+          const startTime = Date.now();
+
+          worker.postMessage({
+            durationInSeconds: durationInSeconds,
+            startTime: startTime,
+          });
+
+          worker.onmessage = function (e) {
+            const timer = e.data;
+
+            const hours = Math.floor(timer / 3600);
+            const minutes = Math.floor((timer % 3600) / 60);
+            const seconds = Math.floor(timer % 60);
+
+            el.find(".logs").html(
+              `Thực hiện sau: ${hours.toString().padStart(2, "0")}:${minutes
+                .toString()
+                .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+            );
+
+            if (timer === 0) {
+              el.find(".logs")
+                .empty()
+                .append(`<li>[${getCurrentDateTime()}]: Bắt đầu chạy</li>`);
+              // Thực hiện hành động khi thời gian đếm ngược kết thúc
+              runTask(el, data);
+              worker.terminate(); // Kết thúc worker sau khi đếm ngược kết thúc
+            }
+          };
+        };
+        const getRandomElements = (arr, num) => {
+          return arr.sort(() => 0.5 - Math.random()).slice(0, num);
+        };
+        const runTask = async (el, data) => {
+          var type_image = $("#type_image").val();
+          var image_count = $(el).find(".active").length;
+          if (type_image == 2 && image_count < 2) {
+            var srcArray = $(el)
+              .find(".img-thumbnail")
+              .map(function () {
+                return $(this).attr("src");
+              })
+              .get();
+            srcArray = getRandomElements(srcArray, 2);
+          } else {
+            var srcArray = $(el)
+              .find(".active")
+              .map(function () {
+                return $(this).attr("src");
+              })
+              .get();
+          }
+          var photoArray = [];
+          var cc = 0;
+          for (let photo of srcArray) {
+            cc++;
+            let canvas = await addPlayButton(photo, cc);
+            if (!canvas) wlogs(el, `Add nút play thất bại`);
+            photoArray.push(`data:image/jpeg;base64,${canvas}`);
+            wlogs(
+              el,
+              `[${getCurrentDateTime()}]: Add nút play thành công <a href="${canvas}" target="_blank">Xem</a>`
+            );
+          }
+          if (photoArray.length > 0) {
+            await createCanvas(el, photoArray, data);
+          }
+        };
+        const createCanvas = async (el, photoArray, data) => {
+          let arr_url = $("[name=canvas_url]").val().trim().split("\n");
+          let open_url_action =
+            arr_url[Math.floor(Math.random() * arr_url.length)];
+          _canvas_url = open_url_action;
+          if (!open_url_action) {
+            alert("Chưa nhập link");
+            return;
+          }
+          let canvas_id;
+          let ads_token = getAdsToken();
+          let acc_id = $("#listAdsAcc").val();
+
+          let page_id = getCurrentPage_id();
+          let page_token = $("#listPages :selected").data("token");
+          let d = {
+            photoArray,
+            ads_token,
+            acc_id,
+            page_id,
+            page_token,
+            open_url_action,
+          };
+
+          let event = new CustomEvent("start_upload_one_photo", {
+            detail: d,
+          });
+          window.dispatchEvent(event);
+          window.addEventListener(
+            "photo_to_canvas_doc_uploaded",
+            function photoUploadHandler(e) {
+              window.removeEventListener(
+                "photo_to_canvas_doc_uploaded",
+                photoUploadHandler
+              );
+              canvas_id = e.detail.id;
+              if (canvas_id) {
+                wlogs(
+                  el,
+                  `[${getCurrentDateTime()}]: Tạo canvas thành công <a href="https://fb.com/canvas_doc/${canvas_id}" target="_blank">Xem</a>`
+                );
+                postVideos(el, canvas_id, data);
+              } else {
+                wlogs(el, `[${getCurrentDateTime()}]: Tạo canvas thất bại`);
+              }
+            }
+          );
+        };
+        const postVideos = (el, canvas_id, data) => {
+          let acc_id = $("#listAdsAcc").val();
+          if (!acc_id) return alert("Ads Account không hợp lệ, acc_id");
+
+          let ads_token = getAdsToken();
+          if (!ads_token) return alert("Lỗi ads_token");
+
+          let page_id = $("#listPages").val();
+          if (!page_id) return alert("Lỗi Page_id");
+
+          let page_token = $("#listPages :selected").data("token");
+          if (!page_token) return alert("Lỗi Page_token");
+
+          let canvas_doc_id = canvas_id;
+          if (!canvas_doc_id) return showErrMess("Chưa chọn Canvas");
+
+          let video_id = data.id;
+          if (!video_id) return showErrMess("Chưa chọn Video");
+
+          let image_url = data.thumbnails.data[0].uri;
+          if ($(el).find(".active").attr("src")) {
+            image_url = $(el).find(".active").attr("src");
+          }
+          if (!image_url) return showErrMess("Lỗi thumbnail của VIDEO");
+          let titlex = data.title
+            ? data.title
+            : data.description
+            ? data.description
+            : "";
+          let message = titlex;
+          let title = titlex;
+          if ($(el).find(".titleText").val()) {
+            message = $(el).find(".titleText").val();
+            title = $(el).find(".titleText").val();
+          }
+          let canvas_url = _canvas_url;
+          let add_profile_id = $("#listPages")
+            .find("option:selected")
+            .data("add-profile-id");
+          let page_name = $("#listPages").find("option:selected").data("name");
+          let detail = {
+            acc_id,
+            ads_token,
+            page_id,
+            page_token,
+            canvas_doc_id,
+            video_id,
+            image_url,
+            message,
+            title,
+            canvas_url,
+            page_name,
+            add_profile_id,
+          };
+          let event = new CustomEvent("create_ads_post2card", {
+            detail: detail,
+          });
+          window.dispatchEvent(event);
+
+          window.addEventListener(
+            "UIrender_created_post2card",
+            function createPost2Card(e) {
+              window.removeEventListener(
+                "UIrender_created_post2card",
+                createPost2Card
+              );
+              let data = e.detail.data;
+              if (data.success) {
+                let effective_object_story_id =
+                  e.detail.effective_object_story_id;
+                wlogs(
+                  el,
+                  `[${getCurrentDateTime()}]: Đăng bài thành công <a href="https://facebook.com/${effective_object_story_id}" target="_blank">Xem</a>`
+                );
+                if ($("#remove_video").val() == "1") {
+                  let event = new CustomEvent("delete_video_by_id", {
+                    detail: { pageId: page_id, video_id: video_id },
+                  });
+                  window.dispatchEvent(event);
+                  window.addEventListener(
+                    "UIrender_remove_video_item",
+                    function removeVideo(r) {
+                      window.removeEventListener(
+                        "UIrender_remove_video_item",
+                        removeVideo
+                      );
+                      let remove =
+                        r?.detail?.data?.data?.xfamily_content_bulk_delete[0]
+                          .success;
+                      if (remove) {
+                        wlogs(
+                          el,
+                          `[${getCurrentDateTime()}]: Xóa video thành công `
+                        );
+                      } else {
+                        wlogs(
+                          el,
+                          `[${getCurrentDateTime()}]: Xóa video thất bại `
+                        );
+                      }
+                    }
+                  );
+                }
+              } else {
+                wlogs(el, `[${getCurrentDateTime()}]: Đăng bài thất bại`);
+              }
+            }
+          );
+        };
+        // const addPlayButton = async (image_url, cc) => {
+        //   if (cc == 1) {
+        //     var url = "https://taolalinh.xyz/play_btn.php";
+        //   } else {
+        //     var url = "https://taolalinh.xyz/play_btn2.php";
+        //   }
+        //   return fetch(url, {
+        //     headers: {
+        //       "content-type": "application/x-www-form-urlencoded",
+        //     },
+        //     body: new URLSearchParams({
+        //       image_url,
+        //     }),
+        //     method: "POST",
+        //     mode: "cors",
+        //     credentials: "include",
+        //   })
+        //     .then((res) => res.text())
+        //     .catch((err) => {
+        //       console.log(err);
+        //       throw err;
+        //     });
+        // };
+        const deleteVideo = (video_id) => {
+          let detail = {
+            video_id,
+          };
+          let event = new CustomEvent("delete_video_by_id", {
+            detail: detail,
+          });
+          window.dispatchEvent(event);
+        };
+        const autoPostModal = (el) => {
+          let videos = $("input[name=videos_selected]:checked").map(
+            (e, item) => {
+              return item;
+            }
+          );
+          if (videos.length > 0) {
+            $("#auto-post-modal").modal("show");
+          }
+        };
+        const wlogs = (el, logs) => {
+          return el.find(".logs").append(`<li>${logs}</li>`);
+        };
+        const startGetListAdsAccount = () => {
+          let listAdsAcc = getListAdsAccount();
+          if (!listAdsAcc || listAdsAcc.length == 0) {
+            let fb_token = getFbToken();
+            window.dispatchEvent(
+              new CustomEvent("start_fetch_userinfo", {
+                detail: {
+                  fb_token,
+                },
+              })
+            );
+            return;
+          }
+          let htmlListAds = "";
+          for (let i = 0; i < listAdsAcc.length; i++) {
+            let adsAcc = listAdsAcc[i];
+            let live = adsAcc.account_status == 1 ? " live" : "";
+            let active = "";
+            if (adsAcc.account_status == 1) {
+              htmlListAds += `<option value="${adsAcc.id}" data-status="${adsAcc.account_status}">${adsAcc.account_id}</option>`;
+            }
+          }
+          $("#listAdsAcc").html(htmlListAds);
+          startGetAdsToken();
+        };
+        const getListAdsAccount = () => {
+          try {
+            const str = localStorage.getItem("fb_ads_account");
+            return JSON.parse(str);
+          } catch (err) {
+            console.log(err);
+            return [];
+          }
+        };
+        const startGetAdsToken = () => {
+          let ads_token = getAdsToken();
+          if (ads_token) {
+            console.log("Đã có ads_token");
+            let event = new CustomEvent("getListPageWithToken", {
+              detail: { ads_token },
+            });
+            window.dispatchEvent(event);
+            return;
+          }
+          console.log("Lấy ads_token");
+          let id = $("#listAdsAcc").val();
+          if (!id) return console.log("Ads acc id sai");
+          let event = new CustomEvent("start_get_ads_token", {
+            detail: { id: id },
+          });
+          window.dispatchEvent(event);
+        };
+        const delay = (delayInms) => {
+          return new Promise((resolve) => setTimeout(resolve, delayInms));
+        };
+        const setCookieFanpage = () => {
+          let page_id = $("#listPages")
+            .find("option:selected")
+            .data("add-profile-id");
+          let event = new CustomEvent("switch_fanpge_by_id", {
+            detail: { page_id: page_id },
+          });
+          window.dispatchEvent(event);
+        };
+        const offAutoCreateReels = () => {
+          let page_id = $("#listPages")
+            .find("option:selected")
+            .data("add-profile-id");
+          let cquick_token = $("#btn-off-create-reels").data("cquick-token");
+          let fb_dtsg = $("#btn-off-create-reels").data("fb_dtsg");
+          let event = new CustomEvent("off_auto_create_reels", {
+            detail: { page_id, cquick_token, fb_dtsg },
+          });
+          window.dispatchEvent(event);
+        };
+        const setFbCookies = (fb_cookies) => {
+          localStorage.setItem("fb_cookies", fb_cookies);
+        };
+        const getFbCookies = () => {
+          try {
+            const token = localStorage.getItem("fb_cookies");
+            return token;
+          } catch (err) {
+            return "";
+          }
+        };
+        const setFbToken = (fb_token) => {
+          localStorage.setItem("fb_token", fb_token);
+        };
+        const getFbToken = () => {
+          try {
+            const token = localStorage.getItem("fb_token");
+            return token;
+          } catch (err) {
+            return "";
+          }
+        };
+        function getAdsToken() {
+          try {
+            const token = localStorage.getItem("ads_token");
+            return token;
+          } catch (err) {
+            return "";
+          }
+        }
+        const settListAdsAccount = (accs) => {
+          let str = JSON.stringify(accs);
+          localStorage.setItem("fb_ads_account", str);
+        };
+        const setAdsToken = (ads_token) => {
+          localStorage.setItem("ads_token", ads_token);
+        };
+        const getCurrentPage_id = () => {
+          let pageId = $("#listPages").val();
+          if (!pageId) console.log("không thể lấy pageId");
+          return pageId;
+        };
+        const getCurrentAcc_id_only_number = () => {
+          let acc_id = $("#listAdsAcc").val();
+          if (!acc_id) console.log("::GETTER: không thể lấy acc_id");
+          acc_id = acc_id.replaceAll("act_", "");
+          return acc_id;
+        };
+
+        const getCurrentDateTime = () => {
+          const currentDate = new Date();
+
+          const day = currentDate.getDate().toString().padStart(2, "0");
+          const month = (currentDate.getMonth() + 1)
+            .toString()
+            .padStart(2, "0");
+          const year = currentDate.getFullYear();
+
+          const hours = currentDate.getHours().toString().padStart(2, "0");
+          const minutes = currentDate.getMinutes().toString().padStart(2, "0");
+          const seconds = currentDate.getSeconds().toString().padStart(2, "0");
+
+          const dateTimeString = `${day}/${month}/${year} ${hours}:${minutes}`;
+
+          return dateTimeString;
+        };
+        const encodeObjectToBase64 = (obj) => {
+          const json = JSON.stringify(obj);
+          const encodedURIComponent = encodeURIComponent(json);
+          const base64 = btoa(encodedURIComponent);
+          return base64;
+        };
+
+        const decodeBase64ToObject = (base64) => {
+          const decodedURIComponent = atob(base64);
+          const json = decodeURIComponent(decodedURIComponent);
+          const obj = JSON.parse(json);
+          return obj;
+        };
+        const formatDateTime = (isoDateTimeString) => {
+          var date = new Date(isoDateTimeString);
+
+          var day = date.getDate();
+          var month = date.getMonth() + 1;
+          var year = date.getFullYear();
+          var hours = date.getHours();
+          var minutes = date.getMinutes();
+          month = month < 10 ? "0" + month : month;
+          day = day < 10 ? "0" + day : day;
+          hours = hours < 10 ? "0" + hours : hours;
+          minutes = minutes < 10 ? "0" + minutes : minutes;
+          var formattedDateTime =
+            hours + ":" + minutes + " " + day + "/" + month + "/" + year;
+          return formattedDateTime;
+        };
+      </script>
+    </div>
+    <script src="./assets/js/app.js" charset="utf-8"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        if (!localStorage.getItem("isLoggedIn")) {
+          window.location.href = "/login.html";
+        }
+      });
+    </script>
+  </body>
+</html>
