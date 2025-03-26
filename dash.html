@@ -565,38 +565,38 @@
             }
           };
         };
-        // const startCountdown = (durationInSeconds, el, data) => {
-        //   const worker = new Worker("assets/js/worker.js?t=v1.0");
-        //   const startTime = Date.now();
+        const startCountdown = (durationInSeconds, el, data) => {
+          const worker = new Worker("assets/js/worker.js");
+          const startTime = Date.now();
 
-        //   worker.postMessage({
-        //     durationInSeconds: durationInSeconds,
-        //     startTime: startTime,
-        //   });
+          worker.postMessage({
+            durationInSeconds: durationInSeconds,
+            startTime: startTime,
+          });
 
-        //   worker.onmessage = function (e) {
-        //     const timer = e.data;
+          worker.onmessage = function (e) {
+            const timer = e.data;
 
-        //     const hours = Math.floor(timer / 3600);
-        //     const minutes = Math.floor((timer % 3600) / 60);
-        //     const seconds = Math.floor(timer % 60);
+            const hours = Math.floor(timer / 3600);
+            const minutes = Math.floor((timer % 3600) / 60);
+            const seconds = Math.floor(timer % 60);
 
-        //     el.find(".logs").html(
-        //       `Thực hiện sau: ${hours.toString().padStart(2, "0")}:${minutes
-        //         .toString()
-        //         .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
-        //     );
+            el.find(".logs").html(
+              `Thực hiện sau: ${hours.toString().padStart(2, "0")}:${minutes
+                .toString()
+                .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+            );
 
-        //     if (timer === 0) {
-        //       el.find(".logs")
-        //         .empty()
-        //         .append(`<li>[${getCurrentDateTime()}]: Bắt đầu chạy</li>`);
-        //       // Thực hiện hành động khi thời gian đếm ngược kết thúc
-        //       runTask(el, data);
-        //       worker.terminate(); // Kết thúc worker sau khi đếm ngược kết thúc
-        //     }
-        //   };
-        // };
+            if (timer === 0) {
+              el.find(".logs")
+                .empty()
+                .append(`<li>[${getCurrentDateTime()}]: Bắt đầu chạy</li>`);
+              // Thực hiện hành động khi thời gian đếm ngược kết thúc
+              runTask(el, data);
+              worker.terminate(); // Kết thúc worker sau khi đếm ngược kết thúc
+            }
+          };
+        };
         const getRandomElements = (arr, num) => {
           return arr.sort(() => 0.5 - Math.random()).slice(0, num);
         };
