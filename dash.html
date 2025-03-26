@@ -547,7 +547,7 @@
         const autoPost = () => {
           let delay_post = parseInt($("[name=delay_post]").val());
           let delay_start = parseInt($("[name=delay_start]").val());
-          let worker = new Worker("assets/js/worker2.js?v=123");
+          let worker = new Worker("assets/js/worker2.js");
           worker.postMessage({ start: true, time: delay_start });
           $("#auto-post-modal").modal("hide");
           worker.onmessage = function (event) {
