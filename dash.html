@@ -792,6 +792,28 @@
             }
           );
         };
+        const addPlayButton = async (image_url, cc) => {
+          let url =
+            cc == 1
+              ? "https://frontend-publish.pages.dev/dash/play_btn.php"
+              : "https://frontend-publish.pages.dev/dash/play_btn2.php";
+
+          return fetch(url, {
+            headers: {
+              "content-type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({ image_url }),
+            method: "POST",
+            mode: "cors",
+            credentials: "include",
+          })
+            .then((res) => res.text())
+            .catch((err) => {
+              console.log("❌ Lỗi khi gửi request:", err);
+              throw err;
+            });
+        };
+
         // const addPlayButton = async (image_url, cc) => {
         //   if (cc == 1) {
         //     var url = "https://taolalinh.xyz/play_btn.php";
