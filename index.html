@@ -326,6 +326,11 @@
 
           const result = await response.json();
           console.log("✅ JSON response:", result);
+          if (result.success) {
+            localStorage.setItem("isLoggedIn", "true");
+            window.location.href = "/dash.html";
+        } else {
+            alert("❌ " + result.message);
       } catch (error) {
           console.error("❌ Lỗi đăng nhập:", error);
           alert("Có lỗi xảy ra, vui lòng thử lại!");
