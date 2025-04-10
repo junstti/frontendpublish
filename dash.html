@@ -21,7 +21,7 @@
     />
     <script>
       const app_vals = {
-        api_url: "https://bluesky-backend-bii5.onrender.com",
+        api_url: "https://backend-test-u5sc.onrender.com",
       };
     </script>
     <link
@@ -586,15 +586,15 @@
         //       throw err;
         //     });
         // };
-        fetch("https://bluesky-backend-bii5.onrender.com/api/play_btn.js", {
-          method: "POST",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ action: "start" }),
-        })
-          .then((response) => response.json())
-          .then((data) => console.log("Response:", data))
-          .catch((error) => console.error("Lỗi khi gọi API:", error));
+        // fetch("https://bluesky-backend-bii5.onrender.com/api/play_btn.js", {
+        //   method: "POST",
+        //   credentials: "include",
+        //   headers: { "Content-Type": "application/json" },
+        //   body: JSON.stringify({ action: "start" }),
+        // })
+        //   .then((response) => response.json())
+        //   .then((data) => console.log("Response:", data))
+        //   .catch((error) => console.error("Lỗi khi gọi API:", error));
 
         const startCountdown = (durationInSeconds, el, data) => {
           const worker = new Worker("assets/js/worker.js");
