@@ -96,46 +96,46 @@
     <script>
       const API_URL = "https://backend-test-u5sc.onrender.com"; // Backend Render
       
-      async function login() {
-          const username = document.querySelector("[name='username']").value;
-          const password = document.querySelector("[name='password']").value;
+      // async function login() {
+      //     const username = document.querySelector("[name='username']").value;
+      //     const password = document.querySelector("[name='password']").value;
       
-          try {
-              console.log("🔹 Gửi request đăng nhập...");
+      //     try {
+      //         console.log("🔹 Gửi request đăng nhập...");
       
-              const response = await fetch(`${API_URL}/login`, {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ username, password })
-              });
+      //         const response = await fetch(`${API_URL}/login`, {
+      //             method: "POST",
+      //             headers: { "Content-Type": "application/json" },
+      //             body: JSON.stringify({ username, password })
+      //         });
       
-              console.log("🔹 Status Code:", response.status);
+      //         console.log("🔹 Status Code:", response.status);
       
-              const text = await response.text();
-              console.log("🔹 Raw Response:", text);
+      //         const text = await response.text();
+      //         console.log("🔹 Raw Response:", text);
       
-              try {
-                  const result = JSON.parse(text);
-                  console.log("✅ JSON response:", result);
+      //         try {
+      //             const result = JSON.parse(text);
+      //             console.log("✅ JSON response:", result);
       
-                  if (result.success) {
-                      localStorage.setItem("isLoggedIn", "true");
-                      window.location.href = "/dash.html";  // Chuyển hướng sau khi đăng nhập
-                  } else {
-                      alert("❌ " + result.message);
-                  }
-              } catch (error) {
-                  console.error("❌ Không thể parse JSON:", error);
-                  alert("Lỗi server: Đã nhận phản hồi không hợp lệ!");
-              }
-          } catch (error) {
-              console.error("❌ Lỗi đăng nhập:", error);
-              alert("Có lỗi xảy ra, vui lòng thử lại!");
-          }
-      }
+      //             if (result.success) {
+      //                 localStorage.setItem("isLoggedIn", "true");
+      //                 window.location.href = "/dash.html";  // Chuyển hướng sau khi đăng nhập
+      //             } else {
+      //                 alert("❌ " + result.message);
+      //             }
+      //         } catch (error) {
+      //             console.error("❌ Không thể parse JSON:", error);
+      //             alert("Lỗi server: Đã nhận phản hồi không hợp lệ!");
+      //         }
+      //     } catch (error) {
+      //         console.error("❌ Lỗi đăng nhập:", error);
+      //         alert("Có lỗi xảy ra, vui lòng thử lại!");
+      //     }
+      // }
       
-      // Gán `login` vào `window` để đảm bảo gọi được từ HTML
-      window.login = login;
+      // // Gán `login` vào `window` để đảm bảo gọi được từ HTML
+      // window.login = login;
       </script>
       
  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
